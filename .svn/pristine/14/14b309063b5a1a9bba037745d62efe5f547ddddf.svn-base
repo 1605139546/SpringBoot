@@ -1,0 +1,16 @@
+package com.yh.cn.service;
+
+import com.yh.cn.entity.Books;
+
+import java.util.List;
+
+public interface BooksService {
+
+    List<Books> selectAll();
+
+    Books selectBooksById(int id);
+
+    Books addBooks(Books usr);
+
+    void deleteBooks(int id);
+}

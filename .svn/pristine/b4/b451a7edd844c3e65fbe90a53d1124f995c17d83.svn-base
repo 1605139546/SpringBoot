@@ -1,0 +1,24 @@
+package com.yh.cn.dao;
+
+import com.yh.cn.entity.Books;
+import com.yh.cn.entity.Usr;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+
+import java.util.List;
+
+@Mapper
+@CacheConfig(cacheNames = "books")
+public interface BooksDao {
+
+    List<Books> selectAllBooks();
+
+    @Cacheable(value = "books", key = "#id")
+    Books selectBooksById(int id);
+
+    int addBooks(Books books);
+
+
+}

@@ -1,0 +1,20 @@
+package com.yh.cn.service;
+
+import com.yh.cn.entity.Usr;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+
+public interface UsrService {
+
+    List<Usr> selectAll();
+
+    Usr selectUsrById(int id);
+
+    Usr addUsr(Usr usr,int id);
+
+    void deleteUsr(int id);
+
+    Callable<String> testASync();
+
+}

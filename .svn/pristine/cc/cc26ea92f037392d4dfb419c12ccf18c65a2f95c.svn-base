@@ -1,0 +1,38 @@
+package com.yh.cn.controller;
+
+import com.yh.cn.entity.Books;
+import com.yh.cn.service.BooksService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RequestMapping("/books")
+@RestController
+public class BooksController {
+
+    @Autowired
+    private BooksService booksService;
+
+    @RequestMapping("/getBooks")
+    public Books getBooks(int id) {
+        return booksService.selectBooksById(id);
+    }
+
+    @RequestMapping("/addBooks")
+    public Books addBooks(int id, String name, String sex, int stuId) {
+        return booksService.addBooks(new Books() {{
+            setId(id);
+            setName(name);
+            setSex(sex);
+            setStuId(stuId);
+        }});
+    }
+
+    @RequestMapping("/delBooks")
+    public void deleteBooks(int id) {
+        booksService.deleteBooks(id);
+    }
+
+
+
+}

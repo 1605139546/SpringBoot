@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yh.cn.dao.BooksDao">
+
+	<select id="selectAllBooks" resultType="com.yh.cn.entity.Books">
+		select * from books
+	</select>
+
+    <select id="selectBooksById" resultType="com.yh.cn.entity.Books">
+        select * from books where id=#{id}
+    </select>
+
+	<insert id="addBooks" parameterType="com.yh.cn.entity.Books">
+		insert into books(id,name,sex,stuId) values (#{id},#{name},#{sex},#{stuId})
+	</insert>
+
+
+</mapper>

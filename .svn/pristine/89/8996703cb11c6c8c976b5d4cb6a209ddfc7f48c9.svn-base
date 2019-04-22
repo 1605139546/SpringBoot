@@ -1,0 +1,31 @@
+package com.yh.cn;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+/**
+ * Spring Boot 应用启动类
+ */
+@SpringBootApplication
+@ServletComponentScan
+@EnableCaching
+@EnableAsync
+//@EnableScheduling
+public class Application extends SpringBootServletInitializer {
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        System.out.println("");
+        return builder.sources(Application.class);
+
+    }
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}

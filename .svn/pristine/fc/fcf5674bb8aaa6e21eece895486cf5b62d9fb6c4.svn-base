@@ -1,0 +1,14 @@
+package com.yh.cn.dao;
+
+import com.yh.cn.entity.Company;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+@Mapper
+public interface CompanyTestExtDao {
+
+    List<Company> selectAll();
+    List<Company> selectList();
+
+}

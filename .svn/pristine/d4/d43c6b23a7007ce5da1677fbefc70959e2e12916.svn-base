@@ -1,0 +1,16 @@
+package com.yh.cn.dao;
+
+import com.yh.cn.entity.Usr;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+@Mapper
+public interface UsrDao {
+
+    List<Usr> selectAll();
+
+    Usr selectUsrById(int id);
+
+    int addUsr(Usr usr);
+}

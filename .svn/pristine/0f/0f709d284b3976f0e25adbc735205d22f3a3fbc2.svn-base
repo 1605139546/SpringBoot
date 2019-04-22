@@ -1,0 +1,87 @@
+package com.yh.cn.service.impl;
+
+import com.yh.cn.controller.HelloController;
+import com.yh.cn.dao.CompanyTestExtDao;
+import com.yh.cn.dao.UsrDao;
+import com.yh.cn.entity.Company;
+import com.yh.cn.entity.Usr;
+import com.yh.cn.service.UsrService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.concurrent.*;
+
+@Service
+public class UsrServiceImpl  implements UsrService {
+
+    private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
+
+    @Autowired
+    private UsrDao usrDao;
+
+    @Autowired
+    private CompanyTestExtDao companyTestExtDao;
+
+    @Override
+    public List<Usr> selectAll() {
+        List<Company> companies = companyTestExtDao.selectAll();
+        List<Company> companies2 = companyTestExtDao.selectList();
+        System.out.println(companies + "<<<<<<" + companies2);
+        return usrDao.selectAll();
+    }
+
+    /**
+     * CachePut 将结果放进缓存
+     *
+     * @return
+     */
+    @CachePut(value = "user", key = "#id")
+    public Usr addUsr(Usr usr, int id) {
+        usrDao.addUsr(usr);
+        return usrDao.selectUsrById(id);
+    }
+
+    /**
+     * CacheEvict 意思是删除缓存
+     */
+    @CacheEvict(value = "user", key = "#id")
+    public void deleteUsr(int id) {
+        System.out.println("删除缓存");
+    }
+
+    /**
+     * Cacheable 如果缓存中有值，从缓存中获取，否则从数据库查询并把结果放缓存中
+     *
+     * @param id
+     * @return
+     */
+    @Cacheable(value = "user", key = "#id")
+    @Override
+    public Usr selectUsrById(int id) {
+        return usrDao.selectUsrById(id);
+    }
+
+    @Async
+    @Override
+    public Callable<String> testASync(){
+        Callable<String> callable = new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                logger.info(Thread.currentThread().getName() + " 进入call方法");
+                String say = usrDao.selectAll().toString();
+                logger.info(Thread.currentThread().getName() + " 从helloService方法返回");
+                return say;
+            }
+        };
+        return callable;
+    }
+
+
+}
